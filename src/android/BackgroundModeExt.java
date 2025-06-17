@@ -166,7 +166,14 @@ public class BackgroundModeExt extends CordovaPlugin {
                 try {
                     Thread.sleep(1000);
                     getApp().runOnUiThread(() -> {
-                        View view = webView.getEngine().getView();
+                        var engine = webView.getEngine();
+                        View view = null;
+
+                        if (engine != null) {
+                            view = webView.getEngine().getView();
+                        } else {
+                            view = webView.getView();
+                        }
 
                         try {
                             Class.forName("org.crosswalk.engine.XWalkCordovaView")
